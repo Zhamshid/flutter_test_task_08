@@ -2,14 +2,11 @@
 import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:test_project_flutter/src/core/base/bloc_observer.dart';
-import 'package:test_project_flutter/src/core/constants/environment.dart';
 import 'package:test_project_flutter/src/features/app/logic/logger.dart';
 
 typedef AsyncDependencies<D> = Future<D> Function();
@@ -37,9 +34,9 @@ mixin MainRunner {
 
           FlutterError.onError = Logger.logFlutterError;
 
-          if (kReleaseMode) {
-            await Sentry.init((p) => p.dsn = kSentryDsn);
-          }
+          // if (kReleaseMode) {
+          //   await Sentry.init((p) => p.dsn = kSentryDsn);
+          // }
 
           var brightness =
               SchedulerBinding.instance.platformDispatcher.platformBrightness;

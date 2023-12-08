@@ -1,9 +1,7 @@
 // ignore_for_file: long-parameter-list,avoid-ignoring-return-values
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:l/l.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// Выбираем куда пойдут ошибки
 /// Ошибки блоков и Flutter'а [ErrorDestination.firebase]
@@ -36,17 +34,17 @@ class ErrorUtil {
       }
       l.e(exception, stackTrace ?? StackTrace.current);
       if (destination == ErrorDestination.sentry) {
-        await Sentry.captureException(
-          exception,
-          stackTrace: stackTrace ?? StackTrace.current,
-          hint: hint,
-        );
+        // await Sentry.captureException(
+        //   exception,
+        //   stackTrace: stackTrace ?? StackTrace.current,
+        //   hint: hint,
+        // );
       } else {
-        await FirebaseCrashlytics.instance.recordError(
-          exception,
-          stackTrace ?? StackTrace.current,
-          reason: hint,
-        );
+        // await FirebaseCrashlytics.instance.recordError(
+        //   exception,
+        //   stackTrace ?? StackTrace.current,
+        //   reason: hint,
+        // );
       }
     } on Object catch (error, stackTrace) {
       l.e('Произошло исключение "$error" в ErrorUtil.logError', stackTrace);
@@ -54,7 +52,7 @@ class ErrorUtil {
   }
 
   static Future<void> onFlutterError(FlutterErrorDetails details) async {
-    await FirebaseCrashlytics.instance.recordFlutterError(details);
+    // await FirebaseCrashlytics.instance.recordFlutterError(details);
   }
 
   static Future<void> logMessage(
@@ -68,9 +66,8 @@ class ErrorUtil {
     try {
       l.e(message, stackTrace);
       if (destination == ErrorDestination.sentry) {
-        await Sentry.captureMessage(message, hint: hint, params: params);
       } else {
-        await FirebaseCrashlytics.instance.log(message);
+        // await FirebaseCrashlytics.instance.log(message);
       }
     } on Object catch (error, stackTrace) {
       l.e('Произошло исключение "$error" в ErrorUtil.logMessage', stackTrace);
